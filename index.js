@@ -5,85 +5,14 @@ const path = require('path');
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
 
-const DEFAULT_IGNORED_PROPERTIES = ['id', 'realmId', 'owner'];
 
-function buildIgnoreSet(customIgnore) {
-  const ignore = new Set(DEFAULT_IGNORED_PROPERTIES);
-  if (!customIgnore) {
-    return ignore;
-  }
+const {
+  DEFAULT_IGNORED_PROPERTIES,
+  buildIgnoreSet,
+  collectNamedEntities,
+  describeValue,
+} = require('./helpers');
 
-  const values = Array.isArray(customIgnore)
-    ? customIgnore
-    : typeof customIgnore === 'string'
-      ? customIgnore.split(',')
-      : [];
-
-  for (const key of values) {
-    if (typeof key === 'string' && key.trim()) {
-      ignore.add(key.trim());
-    }
-  }
-
-  return ignore;
-}
-
-function isPlainObject(value) {
-  return Object.prototype.toString.call(value) === '[object Object]';
-}
-
-function formatPrimitive(value) {
-  if (value === null) {
-    return 'null';
-  }
-  if (typeof value === 'string') {
-    return `"${value}"`;
-  }
-  return String(value);
-}
-
-function describeValue(value, ignoreSet, indentLevel, lines) {
-  const indent = '  '.repeat(indentLevel);
-
-  if (Array.isArray(value)) {
-    if (value.length === 0) {
-      lines.push(`${indent}The list is empty.`);
-      return;
-    }
-
-    // lines.push(`${indent}The list has ${value.length} item${value.length === 1 ? '' : 's'}:`);
-    value.forEach((item, index) => {
-      if (isPlainObject(item) || Array.isArray(item)) {
-        lines.push(`${indent}  ${index + 1}.`);
-        describeValue(item, ignoreSet, indentLevel + 2, lines);
-      } else {
-        lines.push(`${indent}  ${index + 1}. ${formatPrimitive(item)}.`);
-      }
-    });
-    return;
-  }
-
-  if (isPlainObject(value)) {
-    const entries = Object.entries(value).filter(([key]) => !ignoreSet.has(key));
-    if (entries.length === 0) {
-      lines.push(`${indent}No relevant properties.`);
-      return;
-    }
-
-    // lines.push(`${indent}The object has ${entries.length} propert${entries.length === 1 ? 'y' : 'ies'}:`);
-    for (const [key, val] of entries) {
-      if (isPlainObject(val) || Array.isArray(val)) {
-        lines.push(`${indent}  - ${key}:`);
-        describeValue(val, ignoreSet, indentLevel + 2, lines);
-      } else {
-        lines.push(`${indent}  - ${key}: ${formatPrimitive(val)}.`);
-      }
-    }
-    return;
-  }
-
-  lines.push(`${indent}${formatPrimitive(value)}.`);
-}
 
 function jsonToCtb(data, options = {}) {
   const { ignore, output } = options;
@@ -99,7 +28,8 @@ function jsonToCtb(data, options = {}) {
   }
 
   const lines = ['Canonical Text Block', '--------------------'];
-  describeValue(source, ignoreSet, 0, lines);
+  const referenceMap = collectNamedEntities(source);
+  describeValue(source, ignoreSet, 0, lines, referenceMap);
 
   const result = lines.join('\n');
 
