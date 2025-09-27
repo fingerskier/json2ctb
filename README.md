@@ -26,3 +26,8 @@ const json2ctb = new JSON2CTB(config)
 
 - `ignore`: An array of property names that should be excluded when rendering the Canonical Text Block.
 - `output`: An optional file path. When provided, the generated Canonical Text Block will be written to this location in addition to being returned.
+
+## Examples
+
+- `examples/deep/example.json` – Nested data that exercises hierarchical rendering.
+- `examples/multi-records.json` – Multiple record types with IDs and cross references between datasets.
