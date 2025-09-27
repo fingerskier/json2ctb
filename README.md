@@ -15,11 +15,14 @@ import {JSON2CTB} from 'json2ctb'
 const json2ctb = new JSON2CTB(config)
 ```
 
-`config` is optional and may contain ignored properties and ...
+`config` is optional and may contain:
 
-Defaults:
 ```
 {
-    ignore: ['id', 'realmId', 'owner']
+    ignore: ['id', 'realmId', 'owner'],
+    output: undefined
 }
 ```
+
+- `ignore`: An array of property names that should be excluded when rendering the Canonical Text Block.
+- `output`: An optional file path. When provided, the generated Canonical Text Block will be written to this location in addition to being returned.

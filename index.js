@@ -2,18 +2,29 @@
 
 const fs = require('fs');
 const path = require('path');
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
 
 const DEFAULT_IGNORED_PROPERTIES = ['id', 'realmId', 'owner'];
 
 function buildIgnoreSet(customIgnore) {
   const ignore = new Set(DEFAULT_IGNORED_PROPERTIES);
-  if (Array.isArray(customIgnore)) {
-    for (const key of customIgnore) {
-      if (typeof key === 'string' && key.trim()) {
-        ignore.add(key.trim());
-      }
+  if (!customIgnore) {
+    return ignore;
+  }
+
+  const values = Array.isArray(customIgnore)
+    ? customIgnore
+    : typeof customIgnore === 'string'
+      ? customIgnore.split(',')
+      : [];
+
+  for (const key of values) {
+    if (typeof key === 'string' && key.trim()) {
+      ignore.add(key.trim());
     }
   }
+
   return ignore;
 }
 
@@ -75,7 +86,7 @@ function describeValue(value, ignoreSet, indentLevel, lines) {
 }
 
 function jsonToCtb(data, options = {}) {
-  const { ignore } = options;
+  const { ignore, output } = options;
   const ignoreSet = buildIgnoreSet(ignore);
 
   let source = data;
@@ -89,40 +100,48 @@ function jsonToCtb(data, options = {}) {
 
   const lines = ['Canonical Text Block', '--------------------'];
   describeValue(source, ignoreSet, 0, lines);
-  return lines.join('\n');
-}
 
-function parseArgs(argv) {
-  const args = {};
+  const result = lines.join('\n');
 
-  for (let i = 2; i < argv.length; i += 1) {
-    const raw = argv[i];
-    if (!raw.startsWith('--')) {
-      continue;
+  if (output !== undefined && output !== null) {
+    if (typeof output !== 'string' || !output.trim()) {
+      throw new Error('The output option must be a non-empty string when provided.');
     }
 
-    const [keyPart, valuePart] = raw.split('=');
-    const key = keyPart.slice(2);
-
-    if (valuePart !== undefined) {
-      args[key] = valuePart;
-      continue;
-    }
-
-    const next = argv[i + 1];
-    if (next && !next.startsWith('--')) {
-      args[key] = next;
-      i += 1;
-    } else {
-      args[key] = true;
-    }
+    const resolvedOutputPath = path.resolve(process.cwd(), output);
+    fs.writeFileSync(resolvedOutputPath, `${result}\n`, 'utf8');
   }
 
-  return args;
+  return result;
 }
 
 if (require.main === module) {
-  const args = parseArgs(process.argv);
+  const args = yargs(hideBin(process.argv))
+    .usage('Usage: $0 --input <path> [options]')
+    .option('input', {
+      alias: 'i',
+      type: 'string',
+      description: 'Path to the input JSON file.',
+      demandOption: true,
+    })
+    .option('ignore', {
+      alias: 'g',
+      type: 'array',
+      description: 'Properties to ignore in the output.',
+      coerce: (value) => (Array.isArray(value) ? value : [])
+        .flatMap((entry) => String(entry).split(','))
+        .map((entry) => entry.trim())
+        .filter(Boolean),
+    })
+    .option('output', {
+      alias: 'o',
+      type: 'string',
+      description: 'Optional file path to write the Canonical Text Block.',
+    })
+    .help()
+    .alias('help', 'h')
+    .parse();
+
   const inputPath = args.input;
 
   if (!inputPath) {
@@ -148,12 +167,8 @@ if (require.main === module) {
     process.exit(1);
   }
 
-  const ignoreList = typeof args.ignore === 'string'
-    ? args.ignore.split(',').map((value) => value.trim()).filter(Boolean)
-    : [];
-
   try {
-    const ctb = jsonToCtb(parsed, { ignore: ignoreList });
+    const ctb = jsonToCtb(parsed, { ignore: args.ignore, output: args.output });
     process.stdout.write(`${ctb}\n`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
