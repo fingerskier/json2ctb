@@ -1,6 +1,6 @@
 {
   "name": "json2ctb",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ingest JSON data and excretes Canonical Text Blocks",
   "main": "index.js",
   "bin": {
