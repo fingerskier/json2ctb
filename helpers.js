@@ -90,7 +90,6 @@ function describeValue(value, ignoreSet, indentLevel, lines, referenceMap) {
       return;
     }
 
-    lines.push(`${indent}The list has ${value.length} item${value.length === 1 ? '' : 's'}:`);
     value.forEach((item, index) => {
       if (isPlainObject(item) || Array.isArray(item)) {
         lines.push(`${indent}  ${index + 1}.`);
@@ -109,7 +108,6 @@ function describeValue(value, ignoreSet, indentLevel, lines, referenceMap) {
       return;
     }
 
-    lines.push(`${indent}The object has ${entries.length} propert${entries.length === 1 ? 'y' : 'ies'}:`);
     for (const [key, val] of entries) {
       if (isPlainObject(val) || Array.isArray(val)) {
         lines.push(`${indent}  - ${key}:`);
