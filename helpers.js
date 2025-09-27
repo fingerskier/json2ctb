@@ -81,6 +81,21 @@ function resolveReferenceValue(key, value, referenceMap) {
   return value;
 }
 
+function formatReferenceKey(key, value, referenceMap) {
+  if (
+    typeof key === 'string' &&
+    typeof value === 'string' &&
+    key.toLowerCase().endsWith('id') &&
+    referenceMap instanceof Map &&
+    referenceMap.has(value)
+  ) {
+    const baseKey = key.slice(0, -2);
+    return `${baseKey}-xref`;
+  }
+
+  return key;
+}
+
 function describeValue(value, ignoreSet, indentLevel, lines, referenceMap) {
   const indent = '  '.repeat(indentLevel);
 
@@ -114,7 +129,8 @@ function describeValue(value, ignoreSet, indentLevel, lines, referenceMap) {
         describeValue(val, ignoreSet, indentLevel + 2, lines, referenceMap);
       } else {
         const resolvedValue = resolveReferenceValue(key, val, referenceMap);
-        lines.push(`${indent}  - ${key}: ${formatPrimitive(resolvedValue)}.`);
+        const displayKey = formatReferenceKey(key, val, referenceMap);
+        lines.push(`${indent}  - ${displayKey}: ${formatPrimitive(resolvedValue)}`);
       }
     }
     return;
@@ -128,4 +144,5 @@ module.exports = {
   buildIgnoreSet,
   describeValue,
   collectNamedEntities,
+  formatReferenceKey,
 };
