@@ -1,0 +1,139 @@
+Canonical Text Block
+--------------------
+The object has 1 property:
+  - project:
+    The object has 4 properties:
+      - name: "Orion Habitat".
+      - metadata:
+        The object has 3 properties:
+          - status: "prototype".
+          - milestones:
+            The list has 2 items:
+              1.
+                The object has 3 properties:
+                  - title: "Habitation Module".
+                  - status: "complete".
+                  - deliverables:
+                    The list has 2 items:
+                      1.
+                        The object has 3 properties:
+                          - name: "Structural Shell".
+                          - materials:
+                            The list has 2 items:
+                              1. "titanium".
+                              2. "carbon composite".
+                          - tests:
+                            The object has 2 properties:
+                              - vibration: "pass".
+                              - thermal: "pass".
+                      2.
+                        The object has 3 properties:
+                          - name: "Life Support".
+                          - materials:
+                            The list has 2 items:
+                              1. "recycled water".
+                              2. "compressed oxygen".
+                          - tests:
+                            The object has 2 properties:
+                              - pressure: "pass".
+                              - duration: "pass".
+              2.
+                The object has 3 properties:
+                  - title: "Agriculture Dome".
+                  - status: "in_progress".
+                  - deliverables:
+                    The list has 2 items:
+                      1.
+                        The object has 3 properties:
+                          - name: "Hydroponics".
+                          - materials:
+                            The list has 2 items:
+                              1. "nutrient gel".
+                              2. "grow lights".
+                          - tests:
+                            The object has 2 properties:
+                              - growth_cycle: "pending".
+                              - power_draw_kw: 14.5.
+                      2.
+                        The object has 3 properties:
+                          - name: "Radiation Shield".
+                          - materials:
+                            The list has 2 items:
+                              1. "water jacket".
+                              2. "regolith".
+                          - tests:
+                            The object has 2 properties:
+                              - dosimeter: 0.82.
+                              - inspection: "scheduled".
+          - risks:
+            The list has 2 items:
+              1.
+                The object has 3 properties:
+                  - category: "Budget".
+                  - severity: "medium".
+                  - details:
+                    The object has 2 properties:
+                      - description: "Launch costs increasing due to fuel prices.".
+                      - mitigations:
+                        The list has 2 items:
+                          1. "Renegotiate launch manifest".
+                          2. "Seek rideshare options".
+              2.
+                The object has 3 properties:
+                  - category: "Supply Chain".
+                  - severity: "high".
+                  - details:
+                    The object has 2 properties:
+                      - description: "Rare earth magnet deliveries delayed.".
+                      - mitigations:
+                        The list has 2 items:
+                          1. "Secure alternate supplier".
+                          2. "Advance purchase agreements".
+      - team:
+        The list has 3 items:
+          1.
+            The object has 3 properties:
+              - name: "Elena".
+              - role: "Lead Systems Engineer".
+              - skills:
+                The list has 3 items:
+                  1. "systems integration".
+                  2. "radiation modeling".
+                  3. "habitat design".
+          2.
+            The object has 3 properties:
+              - name: "Marcus".
+              - role: "Life Support Specialist".
+              - skills:
+                The list has 2 items:
+                  1. "closed-loop life support".
+                  2. "biochemical analysis".
+          3.
+            The object has 3 properties:
+              - name: "Priya".
+              - role: "Agronomist".
+              - skills:
+                The list has 3 items:
+                  1. "hydroponics".
+                  2. "crop rotation".
+                  3. "soil science".
+      - timeline:
+        The object has 2 properties:
+          - start: "2024-01-15".
+          - phases:
+            The list has 3 items:
+              1.
+                The object has 3 properties:
+                  - name: "Design".
+                  - duration_weeks: 12.
+                  - completed: true.
+              2.
+                The object has 3 properties:
+                  - name: "Fabrication".
+                  - duration_weeks: 20.
+                  - completed: false.
+              3.
+                The object has 3 properties:
+                  - name: "Integration".
+                  - duration_weeks: 16.
+                  - completed: false.
