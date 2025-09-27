@@ -1,0 +1,118 @@
+{
+  "id": 1742,
+  "project": {
+    "name": "Orion Habitat",
+    "metadata": {
+      "owner": "Orbital Systems",
+      "status": "prototype",
+      "milestones": [
+        {
+          "title": "Habitation Module",
+          "status": "complete",
+          "deliverables": [
+            {
+              "name": "Structural Shell",
+              "materials": ["titanium", "carbon composite"],
+              "tests": {
+                "vibration": "pass",
+                "thermal": "pass"
+              }
+            },
+            {
+              "name": "Life Support",
+              "materials": ["recycled water", "compressed oxygen"],
+              "tests": {
+                "pressure": "pass",
+                "duration": "pass"
+              }
+            }
+          ]
+        },
+        {
+          "title": "Agriculture Dome",
+          "status": "in_progress",
+          "deliverables": [
+            {
+              "name": "Hydroponics",
+              "materials": ["nutrient gel", "grow lights"],
+              "tests": {
+                "growth_cycle": "pending",
+                "power_draw_kw": 14.5
+              }
+            },
+            {
+              "name": "Radiation Shield",
+              "materials": ["water jacket", "regolith"],
+              "tests": {
+                "dosimeter": 0.82,
+                "inspection": "scheduled"
+              }
+            }
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "category": "Budget",
+          "severity": "medium",
+          "details": {
+            "description": "Launch costs increasing due to fuel prices.",
+            "mitigations": [
+              "Renegotiate launch manifest",
+              "Seek rideshare options"
+            ]
+          }
+        },
+        {
+          "category": "Supply Chain",
+          "severity": "high",
+          "details": {
+            "description": "Rare earth magnet deliveries delayed.",
+            "mitigations": [
+              "Secure alternate supplier",
+              "Advance purchase agreements"
+            ]
+          }
+        }
+      ]
+    },
+    "team": [
+      {
+        "name": "Elena",
+        "role": "Lead Systems Engineer",
+        "skills": ["systems integration", "radiation modeling", "habitat design"]
+      },
+      {
+        "name": "Marcus",
+        "role": "Life Support Specialist",
+        "skills": ["closed-loop life support", "biochemical analysis"]
+      },
+      {
+        "name": "Priya",
+        "role": "Agronomist",
+        "skills": ["hydroponics", "crop rotation", "soil science"]
+      }
+    ],
+    "timeline": {
+      "start": "2024-01-15",
+      "phases": [
+        {
+          "name": "Design",
+          "duration_weeks": 12,
+          "completed": true
+        },
+        {
+          "name": "Fabrication",
+          "duration_weeks": 20,
+          "completed": false
+        },
+        {
+          "name": "Integration",
+          "duration_weeks": 16,
+          "completed": false
+        }
+      ]
+    }
+  },
+  "realmId": "alpha"
+}
