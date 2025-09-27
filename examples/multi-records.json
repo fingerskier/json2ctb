@@ -1,0 +1,88 @@
+{
+  "datasets": {
+    "customers": [
+      {
+        "id": "cust-001",
+        "name": "Aria Solar",
+        "tier": "platinum",
+        "email": "aria.solar@example.com"
+      },
+      {
+        "id": "cust-002",
+        "name": "Beacon Bio",
+        "tier": "gold",
+        "email": "contact@beaconbio.example.com"
+      }
+    ],
+    "products": [
+      {
+        "id": "prod-101",
+        "name": "HelioGrid Panel",
+        "unitPrice": 1299.0
+      },
+      {
+        "id": "prod-205",
+        "name": "LumenTrack Inverter",
+        "unitPrice": 875.5
+      }
+    ],
+    "orders": [
+      {
+        "id": "ord-9001",
+        "customerId": "cust-001",
+        "status": "shipped",
+        "lineItems": [
+          {
+            "productId": "prod-101",
+            "quantity": 18
+          },
+          {
+            "productId": "prod-205",
+            "quantity": 9
+          }
+        ],
+        "shipping": {
+          "addressId": "addr-2001"
+        }
+      },
+      {
+        "id": "ord-9002",
+        "customerId": "cust-002",
+        "status": "processing",
+        "lineItems": [
+          {
+            "productId": "prod-205",
+            "quantity": 4
+          }
+        ],
+        "shipping": {
+          "addressId": "addr-2003"
+        }
+      }
+    ],
+    "addresses": [
+      {
+        "id": "addr-2001",
+        "label": "Aria HQ",
+        "street": "180 Aurora Way",
+        "city": "Solstice",
+        "region": "CA",
+        "postalCode": "94016",
+        "xref": {
+          "customerId": "cust-001"
+        }
+      },
+      {
+        "id": "addr-2003",
+        "label": "Beacon Warehouse",
+        "street": "42 Meridian Loop",
+        "city": "Helios",
+        "region": "NV",
+        "postalCode": "88901",
+        "xref": {
+          "customerId": "cust-002"
+        }
+      }
+    ]
+  }
+}
