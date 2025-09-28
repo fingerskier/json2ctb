@@ -38,6 +38,10 @@ function jsonToCtb(data, options = {}) {
       throw new Error('The output option must be a non-empty string when provided.');
     }
 
+    if (typeof process === 'undefined' || typeof process.cwd !== 'function') {
+      throw new Error('File output requires a Node.js environment with process.cwd available.');
+    }
+
     const resolvedOutputPath = path.resolve(process.cwd(), output);
     fs.writeFileSync(resolvedOutputPath, `${result}\n`, 'utf8');
   }
