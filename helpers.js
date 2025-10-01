@@ -1,6 +1,6 @@
-const DEFAULT_IGNORED_PROPERTIES = ['id', 'realmId', 'owner'];
+export const DEFAULT_IGNORED_PROPERTIES = ['id', 'realmId', 'owner'];
 
-function buildIgnoreSet(customIgnore) {
+export function buildIgnoreSet(customIgnore) {
   const ignore = new Set(DEFAULT_IGNORED_PROPERTIES);
   if (!customIgnore) {
     return ignore;
@@ -35,7 +35,7 @@ function formatPrimitive(value) {
   return String(value);
 }
 
-function collectNamedEntities(value, referenceMap = new Map()) {
+export function collectNamedEntities(value, referenceMap = new Map()) {
   if (Array.isArray(value)) {
     for (const item of value) {
       collectNamedEntities(item, referenceMap);
@@ -96,7 +96,7 @@ function formatReferenceKey(key, value, referenceMap) {
   return key;
 }
 
-function describeValue(value, ignoreSet, indentLevel, lines, referenceMap) {
+export function describeValue(value, ignoreSet, indentLevel, lines, referenceMap) {
   const indent = '  '.repeat(indentLevel);
 
   if (Array.isArray(value)) {
@@ -138,11 +138,3 @@ function describeValue(value, ignoreSet, indentLevel, lines, referenceMap) {
 
   lines.push(`${indent}${formatPrimitive(value)}.`);
 }
-
-module.exports = {
-  DEFAULT_IGNORED_PROPERTIES,
-  buildIgnoreSet,
-  describeValue,
-  collectNamedEntities,
-  formatReferenceKey,
-};
