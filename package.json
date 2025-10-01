@@ -2,9 +2,18 @@
   "name": "json2ctb",
   "version": "0.3.0",
   "description": "Ingest JSON data and excretes Canonical Text Blocks",
-  "main": "index.js",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "default": "./index.js"
+    },
+    "./node": "./node.js",
+    "./helpers": "./helpers.js"
+  },
   "bin": {
-    "json2ctb": "./index.js"
+    "json2ctb": "./cli.js"
   },
   "scripts": {
     "test": "node test/jsonToCtb.test.js"
