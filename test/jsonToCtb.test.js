@@ -1,10 +1,10 @@
-import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import os from 'node:os';
-import path from 'node:path';
+import assert from 'assert/strict';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 
 import { jsonToCtb } from '../index.js';
-import { jsonToCtbToFile } from '../node.js';
+import { jsonToCtbToFile } from '../entry.js';
 
 function runTest(name, fn) {
   (async () => {
