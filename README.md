@@ -8,24 +8,39 @@ A Canonical Text Block is meant to be a natural-language representation of data.
 
 ## Usage
 
-initialize the module:
+The package now ships as an ES module that can be consumed from Node.js or bundled for the browser without pulling in Node-only dependencies.
 
-```
-import {JSON2CTB} from 'json2ctb'
-const json2ctb = new JSON2CTB(config)
+Generate a Canonical Text Block from a JavaScript value or JSON string:
+
+```js
+import { jsonToCtb } from 'json2ctb';
+
+const block = jsonToCtb({
+  id: 'user-123',
+  name: 'Ada Lovelace',
+  role: 'Engineer',
+});
+
+console.log(block);
 ```
 
-`config` is optional and may contain:
+The conversion accepts an optional `ignore` array that augments the default ignored keys (`['id', 'realmId', 'owner']`).
 
-```
-{
-    ignore: ['id', 'realmId', 'owner'],
-    output: undefined
-}
+```js
+const block = jsonToCtb(data, { ignore: ['createdAt', 'updatedAt'] });
 ```
 
-- `ignore`: An array of property names that should be excluded when rendering the Canonical Text Block.
-- `output`: An optional file path. When provided, the generated Canonical Text Block will be written to this location in addition to being returned.
+### Writing to disk in Node.js
+
+For Node.js workflows you can opt into synchronous file output by importing the Node-flavoured helper:
+
+```js
+import { jsonToCtbToFile } from 'json2ctb/node';
+
+const block = jsonToCtbToFile(data, { output: 'output.ctb' });
+```
+
+The helper resolves `output` relative to the current working directory and writes the rendered Canonical Text Block to disk.
 
 ## Examples
 
