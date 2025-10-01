@@ -2,10 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
-
-
 const {
   DEFAULT_IGNORED_PROPERTIES,
   buildIgnoreSet,
@@ -50,6 +46,9 @@ function jsonToCtb(data, options = {}) {
 }
 
 if (require.main === module) {
+  const yargs = require('yargs/yargs');
+  const { hideBin } = require('yargs/helpers');
+
   const args = yargs(hideBin(process.argv))
     .usage('Usage: $0 --input <path> [options]')
     .option('input', {
