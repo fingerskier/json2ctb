@@ -61,6 +61,11 @@ try {
 try {
   const ctb = jsonToCtb(parsed, { ignore: args.ignore });
 
+  if (ctb === null) {
+    process.stdout.write('');
+    process.exit(0);
+  }
+
   if (args.output) {
     const resolvedOutputPath = path.resolve(process.cwd(), args.output);
     fs.writeFileSync(resolvedOutputPath, `${ctb}\n`, 'utf8');

@@ -24,9 +24,20 @@ runTest('jsonToCtb returns Canonical Text Block output for objects', () => {
   assert.ok(result.includes('hello: "world"'))
 })
 
+runTest('jsonToCtb uses root-level title properties when available', () => {
+  const result = jsonToCtb({ title: 'Example Object', value: 42 })
+  assert.ok(result.startsWith('Example Object\n--------------'))
+})
+
 runTest('jsonToCtb parses JSON string input', () => {
   const result = jsonToCtb('{"greeting":"hi"}')
   assert.ok(result.includes('greeting: "hi"'))
+})
+
+runTest('jsonToCtb returns null for empty inputs', () => {
+  assert.strictEqual(jsonToCtb({}), null)
+  assert.strictEqual(jsonToCtb(''), null)
+  assert.strictEqual(jsonToCtb(null), null)
 })
 
 runTest('jsonToCtbToFile writes to disk in Node.js environments', () => {
