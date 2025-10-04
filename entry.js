@@ -16,6 +16,10 @@ export function jsonToCtbToFile(data, options = {}) {
   }
 
   const result = jsonToCtb(data, { ignore })
+  if (result === null) {
+    return null
+  }
+
   const resolvedOutputPath = path.resolve(process.cwd(), output)
   fs.writeFileSync(resolvedOutputPath, `${result}\n`, 'utf8')
   return result
